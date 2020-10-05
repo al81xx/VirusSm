@@ -34,8 +34,8 @@ namespace VirusSm
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(
-                opts =>
-                    opts.UseNpgsql(Configuration.GetConnectionString("PostgresDefault"))
+                options =>
+                    options.UseNpgsql(Configuration.GetConnectionString("PostgresDefault"))
                         .UseSnakeCaseNamingConvention()
             );
 
@@ -60,7 +60,6 @@ namespace VirusSm
                     options.GroupNameFormat = "'v'VVV";
                 }
             );
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerOptionsConfiguration>();
             services.AddSwaggerGen(
                 options =>
                 {
@@ -68,6 +67,7 @@ namespace VirusSm
                 }
             );
 
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerOptionsConfiguration>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IProfileService, ProfileService>();
         }
